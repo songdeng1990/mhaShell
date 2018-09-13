@@ -9,7 +9,7 @@ dingdingrobot="https://oapi.dingtalk.com/robot/send?access_token=3647e8264c9c94b
 
 port=22
 mhapwd=sJospqA_8s1H
-replpwd=onethinG2018
+replpwd=dfadasdfa
 masterip=172.20.1.1
 slaveip=172.20.1.4
 secondCheckIP=172.20.1.7
