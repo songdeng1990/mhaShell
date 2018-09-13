@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+set ip [lindex $argv 0]
+set user [lindex $argv 1]
+set password [lindex $argv 2]
+set script [lindex $argv 3]
+
+log_user 0
+
+spawn scp $script $user@$ip:~
+
+
+expect {
+	"(yes/no)?" {send "yes\r"}
+	"Password:*" {send "$password\r"}
+}
+
+expect {
+	"100%"  {}
+}
+
+expect eof

@@ -1,0 +1,38 @@
+[server default]
+manager_workdir=/etc/masterha/app1
+manager_log=/etc/masterha/app1/manager.log
+ssh_user=root 
+user=admin	
+password=admin
+ping_type=insert
+repl_user=repl
+repl_password=123456
+master_binlog_dir=/usr/local/mysql/data
+ping_interval=3
+#master failover时执行,不配置vip时不用配
+master_ip_failover_script=/etc/masterha/app1/scripts/master_ip_failover
+#shutdown_script=/etc/masterha/power_manager
+#report_script=/etc/masterha/app1/send_report  #master failover时执行,可选
+master_ip_online_change_script=/etc/masterha/app1/scripts/master_ip_online_change
+#secondary_check_script=masterha_secondary_check -s 192.168.13.122
+#master_ip_failover_script=/usr/bin/master_ip_hard_failover_helper
+#master_ip_online_change_script=/usr/bin/master_ip_online_failover_helper
+#report_script=/usr/bin/master_failover_report
+[server1]
+hostname=192.168.13.121
+port=3306
+candidate_master=1
+#check_repl_delay=0
+ 
+[server2]
+hostname=192.168.13.122
+port=3306
+candidate_master=1  
+#check_repl_delay=0
+ 
+#[server3]
+#hostname=10.1.5.195
+#port=3306
+#master_binlog_dir=/var/lib/mysql
+#ignore_fail=1  #如果这个节点挂了，mha将不可用，加上这个参数，slave挂了一样可以用
+#no_master=1  #从不将这台主机转换为master

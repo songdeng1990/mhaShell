@@ -1,0 +1,21 @@
+
+global_defs {
+   router_id Ha_keepalived
+}
+
+vrrp_instance VI_1 {
+    state backup
+    interface @if
+    virtual_router_id 66
+    priority 100
+    advert_int 1
+    unicast_src_ip @local_ip
+    unicast_peer {
+       @another_ip
+    }
+    virtual_ipaddress {
+       @vip
+    }
+   
+    notify_master /etc/keepalived/notify.sh
+}

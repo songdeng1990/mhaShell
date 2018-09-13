@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+
+set ip [lindex $argv 0]
+set user [lindex $argv 1]
+set password [lindex $argv 2]
+set command [lindex $argv 3]
+
+spawn ssh $user@$ip
+
+expect {
+       "to continue connecting (yes/no)?" {send "yes\r";exp_continue}
+       "Password: " {send "$password\r"}
+}
+
+#expect {
+#	"*]*" {send "sudo su\r"}
+#}
+
+#sleep 1
+
+expect {
+       "*]*" {send "$command\r"}	
+}
+
+expect {
+	"*]*" {exit}
+}
+
+expect eof 

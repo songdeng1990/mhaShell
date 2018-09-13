@@ -1,0 +1,20 @@
+#!/bin/sh
+cp /home/dengsong/redis_port.py /home/dengsong/redis_stats.sh /usr/local/zabbix/bin/
+
+
+sed -i '/UnsafeUserParameters/d' /usr/local/zabbix/etc/zabbix_agentd.conf
+sed -i '/redis\.discovery/d' /usr/local/zabbix/etc/zabbix_agentd.conf
+sed -i '/redis\[\*\]/d' /usr/local/zabbix/etc/zabbix_agentd.conf 
+echo never >> /sys/kernel/mm/transparent_hugepage/enabled
+sed -i '/vm.overcommit_memory/d' /etc/sysctl.conf
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
+sysctl -p > /dev/null
+sed -i 's/auth.*requisite.*uid.*>=.*1000.*/auth        requisite     pam_succeed_if.so uid >= 600 quiet_success/g' /etc/pam.d/password-auth-ac 
+cat /etc/passwd | grep redisapp
+echo 'UnsafeUserParameters=1 '  >> /usr/local/zabbix/etc/zabbix_agentd.conf
+echo 'UserParameter=redis.discovery,/usr/local/zabbix/bin/redis_port.py ' >>/usr/local/zabbix/etc/zabbix_agentd.conf
+echo 'UserParameter=redis[*],/usr/local/zabbix/bin/redis_stats.sh  $1  $2 ' >>/usr/local/zabbix/etc/zabbix_agentd.conf
+chown -R zabbix:zabbix /usr/local/zabbix/bin/
+pgrep -f zabbix|xargs kill -9;/usr/local/zabbix/sbin/zabbix_agentd /usr/local/zabbix/etc/zabbix_agentd.conf
+
+

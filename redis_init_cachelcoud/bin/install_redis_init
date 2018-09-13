@@ -1,0 +1,25 @@
+user=redisapp
+group=redisapp
+redis_home=/opt/redis
+
+
+#user add
+chattr -i /etc/gshadow  /etc/shadow /etc/passwd /etc/group /etc/gshadow-  /etc/shadow- /etc/passwd- /etc/group-  > /dev/null 2>&1
+pass=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;`
+group add $group
+useradd -p `openssl passwd -1 $pass` $user
+usermod -p `openssl passwd -1 $pass` $user
+mkdir -p $redis_home
+chown -R $user:$group $redis_home
+cpu_num=`cat /proc/cpuinfo | grep processor | wc -l`
+mem_kb=`cat /proc/meminfo | grep 'MemTotal:' | tr -cd 0-9`
+mem_mb=`expr $mem_kb / 1024`
+inner_ip=`ifconfig -a | grep 'inet ' | cut -d ':' -f 2 |cut -d ' ' -f 1 | grep -v '^127'|grep -E '10.|172.16|192.168.|172.17.|172.18.|172.19.|172.20.|172.21.|172.22.|172.23.|172.24.|172.25.|172.26.|172.27.|172.28.|172.29.|172.30.|172.31.'`
+echo "config:$inner_ip:$cpu_num:$mem_mb:$user:$pass"
+
+#system init
+echo never >> /sys/kernel/mm/transparent_hugepage/enabled
+echo "echo never >> /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
+sed -i '/vm.overcommit_memory/d' /etc/sysctl.conf
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
+sysctl -p > /dev/null
