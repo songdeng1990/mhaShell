@@ -11,7 +11,7 @@ spawn scp $script $user@$ip:~
 
 expect {
 	"(yes/no)?" {send "yes\r"}
-	"Password:*" {send "$password\r"}
+	-nocase "Password:*" {send "$password\r"}
 }
 
 expect {

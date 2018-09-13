@@ -14,7 +14,7 @@ masterip=172.20.1.1
 slaveip=172.20.1.4
 secondCheckIP=172.20.1.7
 
-yum install perl perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-DBD-MySQL perl-Config-Tiny perl-Log-Dispatch perl-Parallel-ForkManager perl-Config-IniFiles -y
+yum install perl perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-DBD-MySQL perl-Config-Tiny perl-Log-Dispatch perl-Parallel-ForkManager perl-Config-IniFiles perl-Time-HiRes -y
 
 rpm -ivh --force node.rpm manager.rpm 
 tar xvf mha_manager_conf.tar.gz -C /etc/

@@ -9,7 +9,7 @@ spawn ssh $user@$ip
 
 expect {
        "to continue connecting (yes/no)?" {send "yes\r";exp_continue}
-       "Password: " {send "$password\r"}
+       -nocase "Password: " {send "$password\r"}
 }
 
 #expect {

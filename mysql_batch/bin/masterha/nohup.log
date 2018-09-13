@@ -1,7 +1,0 @@
-nohup: ignoring input
-Tue May  9 14:38:21 2017 - [warning] Global configuration file /etc/masterha_default.cnf not found. Skipping.
-Tue May  9 14:38:21 2017 - [info] Reading application default configuration from /etc/masterha/app_default.cnf..
-Tue May  9 14:38:21 2017 - [info] Reading server configuration from /etc/masterha/app_default.cnf..
-Tue May  9 14:39:51 2017 - [warning] Global configuration file /etc/masterha_default.cnf not found. Skipping.
-Tue May  9 14:39:51 2017 - [info] Reading application default configuration from /etc/masterha/app_default.cnf..
-Tue May  9 14:39:51 2017 - [info] Reading server configuration from /etc/masterha/app_default.cnf..
